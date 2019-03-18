@@ -26,16 +26,32 @@ import edu.wpi.dyn.ravana.cs4233.cmv.ChessPiece;
 import edu.wpi.dyn.ravana.cs4233.cmv.ChessPieceDefined;
 import edu.wpi.dyn.ravana.cs4233.cmv.Square;
 
+/**
+ * Class representing bishops.
+ */
 public class Bishop extends ChessPieceDefined {
+	/**
+	 * @see ChessPieceDefined
+	 */
 	public Bishop(PieceColor color) {
 		super(color);
 	}
 
+	/**
+	 * Verifies whether the bishop is moving diagonally only.
+	 * @see ChessPieceDefined
+	 */
 	@Override
 	public boolean canMove(Square from, Square to, ChessPiece at) {
-		return false;
+		// Diagonality check is simple: make sure the difference in X is the same as the difference in Y.
+		int dx = from.getColumn() - to.getColumn();
+		int dy = from.getRow() - to.getRow();
+		return dx == dy;
 	}
 
+	/**
+	 * @see ChessPiece
+	 */
 	@Override
 	public PieceType getPieceType() {
 		return PieceType.BISHOP;

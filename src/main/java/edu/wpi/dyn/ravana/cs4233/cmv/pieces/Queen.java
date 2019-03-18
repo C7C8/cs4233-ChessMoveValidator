@@ -26,14 +26,26 @@ import edu.wpi.dyn.ravana.cs4233.cmv.ChessPiece;
 import edu.wpi.dyn.ravana.cs4233.cmv.ChessPieceDefined;
 import edu.wpi.dyn.ravana.cs4233.cmv.Square;
 
+/**
+ * Class representing queens.
+ */
 public class Queen extends ChessPieceDefined {
+	/**
+	 * @see ChessPieceDefined
+	 */
 	public Queen(PieceColor color) {
 		super(color);
 	}
 
+	/**
+	 * Verifies the queen's move is purely diagonal or purely rook-like
+	 * @see ChessPieceDefined
+	 */
 	@Override
 	public boolean canMove(Square from, Square to, ChessPiece at) {
-		return false;
+		int dx = from.getColumn() - to.getColumn();
+		int dy = from.getRow() - to.getRow();
+		return (dx == dy) || (dx != 0 && dy == 0) || (dx == 0 && dy != 0);
 	}
 
 	@Override

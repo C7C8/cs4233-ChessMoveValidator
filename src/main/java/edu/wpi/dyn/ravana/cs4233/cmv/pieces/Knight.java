@@ -26,16 +26,32 @@ import edu.wpi.dyn.ravana.cs4233.cmv.ChessPiece;
 import edu.wpi.dyn.ravana.cs4233.cmv.ChessPieceDefined;
 import edu.wpi.dyn.ravana.cs4233.cmv.Square;
 
+/**
+ * Class representing a knight
+ */
 public class Knight extends ChessPieceDefined {
+	/**
+	 * @see ChessPieceDefined
+	 */
 	public Knight(PieceColor color) {
 		super(color);
 	}
 
+	/**
+	 * Validates the knight's move. Knights must always move either 1 forward and 2 to the side, or 2 forward and 1
+	 * to the side. They can also skip anything they like.
+	 * @see ChessPieceDefined
+	 */
 	@Override
 	public boolean canMove(Square from, Square to, ChessPiece at) {
-		return false;
+		int dx = Math.abs(from.getColumn() - to.getColumn());
+		int dy = Math.abs(from.getRow() - to.getRow());
+		return (dx == 1 && dy == 2) || (dx == 2 && dy == 1);
 	}
 
+	/**
+	 * @see ChessPiece
+	 */
 	@Override
 	public PieceType getPieceType() {
 		return PieceType.KNIGHT;

@@ -26,16 +26,32 @@ import edu.wpi.dyn.ravana.cs4233.cmv.ChessPiece;
 import edu.wpi.dyn.ravana.cs4233.cmv.ChessPieceDefined;
 import edu.wpi.dyn.ravana.cs4233.cmv.Square;
 
+/**
+ * Class representing kings.
+ */
 public class King extends ChessPieceDefined {
+
+	/**
+	 * @see ChessPieceDefined
+	 */
 	public King(PieceColor color) {
 		super(color);
 	}
 
+	/**
+	 * Verifies whether the King is moving one space only, in any direction.
+	 * @see ChessPieceDefined
+	 */
 	@Override
 	public boolean canMove(Square from, Square to, ChessPiece at) {
-		return false;
+		int dx = from.getColumn() - to.getColumn();
+		int dy = from.getRow() - to.getRow();
+		return Math.abs(dx) <= 1 && Math.abs(dy) <= 1;
 	}
 
+	/**
+	 * @see ChessPiece
+	 */
 	@Override
 	public PieceType getPieceType() {
 		return PieceType.KING;

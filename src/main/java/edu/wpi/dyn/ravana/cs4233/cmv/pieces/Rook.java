@@ -26,16 +26,31 @@ import edu.wpi.dyn.ravana.cs4233.cmv.ChessPiece;
 import edu.wpi.dyn.ravana.cs4233.cmv.ChessPieceDefined;
 import edu.wpi.dyn.ravana.cs4233.cmv.Square;
 
+/**
+ * Class representing rooks.
+ */
 public class Rook extends ChessPieceDefined {
+	/**
+	 * @see ChessPieceDefined
+	 */
 	public Rook(PieceColor color) {
 		super(color);
 	}
 
+	/**
+	 * Verifies whether the rook is moving in any non-diagonal direction.
+	 * @see ChessPieceDefined
+	 */
 	@Override
 	public boolean canMove(Square from, Square to, ChessPiece at) {
-		return false;
+		int dx = from.getColumn() - to.getColumn();
+		int dy = from.getRow() - to.getRow();
+		return (dx != 0 && dy == 0) || (dx == 0 && dy != 0);
 	}
 
+	/**
+	 * @see ChessPiece;
+	 */
 	@Override
 	public PieceType getPieceType() {
 		return PieceType.ROOK;

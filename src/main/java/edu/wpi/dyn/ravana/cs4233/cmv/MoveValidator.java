@@ -53,18 +53,24 @@ public class MoveValidator {
 				return false;
 		}
 
+		// Can't move to the same spot we're already in
+		if (from.equals(to))
+			return false;
 
 		// Can't move a piece on top of another of the same color
 		ChessPieceDefined piece = (ChessPieceDefined) board.getPieceAt(from);
 		if (board.isSquareOccupied(to) && board.getPieceAt(to).getPieceColor() == piece.getPieceColor())
 			return false;
-		ChessPieceDefined at = (ChessPieceDefined) board.getPieceAt(to);
 
 		// Leave the final decision of whether the piece can move or not up to the piece itself.
 		// This helps prevent the MoveValidator class from becoming enormous and littered with
 		// special-case code for each and every piece, and follows the object-oriented
 		// paradigm by leaving the ultimate behavior of classes (or the objects they represent)
 		// to the classes themselves.
+		//
+		// This also provides a good environment for pieces to be built in, since they now only
+		// have to worry about their movement rules, and not things like bounds or sanity checks
+		ChessPieceDefined at = (ChessPieceDefined) board.getPieceAt(to);
 		return piece.canMove(from, to, at);
 	}
 }
