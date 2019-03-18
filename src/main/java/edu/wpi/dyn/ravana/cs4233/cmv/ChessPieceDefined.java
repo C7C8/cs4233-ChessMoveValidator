@@ -22,7 +22,25 @@
 
 package edu.wpi.dyn.ravana.cs4233.cmv;
 
-public interface ChessPieceDefined extends ChessPiece {
+/**
+ * Extension of the ChessPiece interface to provide a canMove() function.
+ * Implemented as an abstract class since I wanted to provide a constructor
+ * and a definition for getPieceColor, but require a canMove() function.
+ *
+ * Outside of this assignment, I would've put this stuff in the ChessPiece
+ * interface, but I didn't want to touch it.
+ */
+public abstract class ChessPieceDefined implements ChessPiece {
+	PieceColor color;
+
+	public ChessPieceDefined(PieceColor color) {
+		this.color = color;
+	}
+
+	@Override
+	public PieceColor getPieceColor() {
+		return color;
+	}
 
 	/**
 	 * Determines whether the piece can move from its current square to a new one
@@ -31,5 +49,5 @@ public interface ChessPieceDefined extends ChessPiece {
 	 * @param at What's at the square, if anything
 	 * @return True if move is possible, false if otherwise.
 	 */
-	boolean canMove(Square from, Square to, ChessPiece at);
+	public abstract boolean canMove(Square from, Square to, ChessPiece at);
 }

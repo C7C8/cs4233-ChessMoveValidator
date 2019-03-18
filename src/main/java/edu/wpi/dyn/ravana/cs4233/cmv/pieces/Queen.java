@@ -26,33 +26,18 @@ import edu.wpi.dyn.ravana.cs4233.cmv.ChessPiece;
 import edu.wpi.dyn.ravana.cs4233.cmv.ChessPieceDefined;
 import edu.wpi.dyn.ravana.cs4233.cmv.Square;
 
-public class Queen implements ChessPieceDefined {
-	/**
-	 * Determines whether the piece can move from its current square to a new one
-	 *
-	 * @param from Source square
-	 * @param to   Destination square
-	 * @param at   What's at the square, if anything
-	 * @return True if move is possible, false if otherwise.
-	 */
+public class Queen extends ChessPieceDefined {
+	public Queen(PieceColor color) {
+		super(color);
+	}
+
 	@Override
 	public boolean canMove(Square from, Square to, ChessPiece at) {
 		return false;
 	}
 
-	/**
-	 * @return the piece type
-	 */
 	@Override
 	public PieceType getPieceType() {
-		return null;
-	}
-
-	/**
-	 * @return the piece color
-	 */
-	@Override
-	public PieceColor getPieceColor() {
-		return null;
+		return PieceType.QUEEN;
 	}
 }

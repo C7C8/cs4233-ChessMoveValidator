@@ -24,6 +24,7 @@ package edu.wpi.dyn.ravana.cs4233.cmv;
 
 import edu.wpi.dyn.ravana.cs4233.cmv.ChessPiece.PieceColor;
 import edu.wpi.dyn.ravana.cs4233.cmv.ChessPiece.PieceType;
+import edu.wpi.dyn.ravana.cs4233.cmv.pieces.*;
 
 /**
  * A simple factory for creating chess pieces. This needs to be implemented
@@ -32,7 +33,32 @@ import edu.wpi.dyn.ravana.cs4233.cmv.ChessPiece.PieceType;
  * @version Feb 15, 2019
  */
 public class ChessPieceFactory {
+
+	/**
+	 * Make chess pieces!
+	 * @param color Color of piece
+	 * @param type Type of piece
+	 * @return Constructed piece object. Underlying class varies with type.
+	 */
 	public static ChessPiece makePiece(PieceColor color, PieceType type) {
-		return new ChessPieceImpl(type, color);
+
+		// To add more pieces (...not sure why you'd want to, but hey, flexibility! Right?) it's as easy as expanding
+		// this switch statement. No breaks are needed since the only thing in each is a return statement anyways.
+		switch (type) {
+			case PAWN:
+				return new Pawn(color);
+			case KNIGHT:
+				return new Knight(color);
+			case BISHOP:
+				return new Bishop(color);
+			case ROOK:
+				return new Rook(color);
+			case QUEEN:
+				return new Queen(color);
+			case KING:
+				return new King(color);
+			default: // just to get rid of a warning...
+				return new Pawn(color);
+		}
 	}
 }
