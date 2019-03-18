@@ -24,22 +24,19 @@ package edu.wpi.dyn.ravana.cs4233.cmv;
 /**
  * A data structure that contains the row (a-h) and column (1-8) of a square on
  * the chess board.
- * 
  * NOTE: Students may modify this class through subclassing or adding protected, private,
  * and package protected (no modifiers), but not by adding public methods.
- * 
+ *
  * @version Feb 15, 2019
  */
-public class Square
-{
+public class Square {
 	private final char column;
 	private final int row;
-	
+
 	/**
 	 * Default constructor
 	 */
-	public Square(char column, int row)
-	{
+	public Square(char column, int row) {
 		this.row = row;
 		this.column = column;
 	}
@@ -47,16 +44,14 @@ public class Square
 	/**
 	 * @return the column
 	 */
-	public char getColumn()
-	{
+	public char getColumn() {
 		return column;
 	}
 
 	/**
 	 * @return the row
 	 */
-	public int getRow()
-	{
+	public int getRow() {
 		return row;
 	}
 
@@ -64,8 +59,7 @@ public class Square
 	 * @see java.lang.Object#hashCode()
 	 */
 	@Override
-	public int hashCode()
-	{
+	public int hashCode() {
 		final int prime = 31;
 		int result = 1;
 		result = prime * result + column;
@@ -77,8 +71,7 @@ public class Square
 	 * @see java.lang.Object#equals(java.lang.Object)
 	 */
 	@Override
-	public boolean equals(Object obj)
-	{
+	public boolean equals(Object obj) {
 		if (this == obj) {
 			return true;
 		}

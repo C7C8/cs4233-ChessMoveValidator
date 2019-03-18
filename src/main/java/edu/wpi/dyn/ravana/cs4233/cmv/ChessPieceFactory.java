@@ -21,17 +21,18 @@
  */
 
 package edu.wpi.dyn.ravana.cs4233.cmv;
-import edu.wpi.dyn.ravana.cs4233.cmv.ChessPiece.*;
+
+import edu.wpi.dyn.ravana.cs4233.cmv.ChessPiece.PieceColor;
+import edu.wpi.dyn.ravana.cs4233.cmv.ChessPiece.PieceType;
 
 /**
  * A simple factory for creating chess pieces. This needs to be implemented
  * by the student.
+ *
  * @version Feb 15, 2019
  */
-public class ChessPieceFactory
-{
-	public static ChessPiece makePiece(PieceColor color, PieceType type)
-	{
-		throw new MethodNotImplementedException("ChessPieceFactory.makePiece");
+public class ChessPieceFactory {
+	public static ChessPiece makePiece(PieceColor color, PieceType type) {
+		return new ChessPieceImpl(type, color);
 	}
 }

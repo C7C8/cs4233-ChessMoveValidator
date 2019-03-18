@@ -25,23 +25,31 @@ package edu.wpi.dyn.ravana.cs4233.cmv;
  * The MoveValidator has a single method that takes a ChessBoard instance
  * and two squares. It validates that the piece on the first square can move to
  * the second square on the given board.
- * 
  * Students must implement this method
- * 
+ *
  * @version Feb 15, 2019
  */
-public class MoveValidator
-{
+public class MoveValidator {
 	/**
 	 * Determines if a move can be made
+	 *
 	 * @param board the board state
-	 * @param from the square the piece is moving from
-	 * @param to the square the piece is moving to
+	 * @param from  the square the piece is moving from
+	 * @param to    the square the piece is moving to
 	 * @return true if the move can be made false otherwise
 	 * @throws CMVException if there is an error, such as no piece on the from square
 	 */
-	public static boolean canMove(ChessBoard board, Square from, Square to)
-	{
-		throw new MethodNotImplementedException("MoveValidator.canMove");
+	public static boolean canMove(ChessBoard board, Square from, Square to) {
+		// Idiot check
+		if (!board.isSquareOccupied(from))
+			throw new CMVException("Square unoccupied");
+
+		ChessPiece piece = board.getPieceAt(from);
+
+		// Can't move a piece on top of another of the same color
+		if (board.isSquareOccupied(to) && board.getPieceAt(to).getPieceColor() == piece.getPieceColor())
+			return false;
+
+		return true;
 	}
 }

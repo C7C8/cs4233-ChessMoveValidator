@@ -19,21 +19,17 @@
  * This file was developed as part of CS 4233: Object-Oriented Analysis &
  * Design, at Worcester Polytechnic Institute.
  */
+
 package edu.wpi.dyn.ravana.cs4233.cmv;
 
-/**
- * Exception that is used to indicate any error when determining whether a move may be
- * made or not.
- *
- * @version Feb 18, 2019
- */
-public class CMVException extends RuntimeException {
+public interface ChessPieceDefined extends ChessPiece {
+
 	/**
-	 * Sole constructor.
-	 *
-	 * @param message the reason for the error
+	 * Determines whether the piece can move from its current square to a new one
+	 * @param from Source square
+	 * @param to Destination square
+	 * @param at What's at the square, if anything
+	 * @return True if move is possible, false if otherwise.
 	 */
-	public CMVException(String message) {
-		super(message);
-	}
+	boolean canMove(Square from, Square to, ChessPiece at);
 }

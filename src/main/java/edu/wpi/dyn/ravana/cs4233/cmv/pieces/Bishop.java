@@ -19,33 +19,40 @@
  * This file was developed as part of CS 4233: Object-Oriented Analysis &
  * Design, at Worcester Polytechnic Institute.
  */
-package edu.wpi.dyn.ravana.cs4233.cmv;
 
-/**
- * This interface contains the methods that you may use for the chess pieces in the
- * chess move validator program. The master tests will supply a board with pieces that
- * implement this interface positioned on it.
- * <p>
- * NOTE: Students must implement an instance of this interface. Tests will only depend upon
- * this interface, but the students can add any behavior needed to their implementation.
- *
- * @version Jan 25, 2019
- */
-public interface ChessPiece {
-	public enum PieceType {KING, QUEEN, BISHOP, KNIGHT, ROOK, PAWN}
-	public enum PieceColor {WHITE, BLACK}
+package edu.wpi.dyn.ravana.cs4233.cmv.pieces;
+
+import edu.wpi.dyn.ravana.cs4233.cmv.ChessPiece;
+import edu.wpi.dyn.ravana.cs4233.cmv.ChessPieceDefined;
+import edu.wpi.dyn.ravana.cs4233.cmv.Square;
+
+public class Bishop implements ChessPieceDefined {
+	/**
+	 * Determines whether the piece can move from its current square to a new one
+	 *
+	 * @param from Source square
+	 * @param to   Destination square
+	 * @param at   What's at the square, if anything
+	 * @return True if move is possible, false if otherwise.
+	 */
+	@Override
+	public boolean canMove(Square from, Square to, ChessPiece at) {
+		return false;
+	}
 
 	/**
 	 * @return the piece type
 	 */
-	default PieceType getPieceType() {
-		throw new MethodNotImplementedException("ChessPiece.getPieceType()");
+	@Override
+	public PieceType getPieceType() {
+		return null;
 	}
 
 	/**
 	 * @return the piece color
 	 */
-	default PieceColor getPieceColor() {
-		throw new MethodNotImplementedException("ChessPiece.getPieceColor()");
+	@Override
+	public PieceColor getPieceColor() {
+		return null;
 	}
 }

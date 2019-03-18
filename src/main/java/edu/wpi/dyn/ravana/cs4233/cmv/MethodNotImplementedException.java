@@ -22,18 +22,18 @@
 package edu.wpi.dyn.ravana.cs4233.cmv;
 
 /**
- * Exception class for the method not implemented that is the default for some 
+ * Exception class for the method not implemented that is the default for some
  * interface methods.
+ *
  * @version Jan 25, 2019
  */
-public class MethodNotImplementedException extends RuntimeException
-{
+public class MethodNotImplementedException extends RuntimeException {
 	/**
 	 * Message is required
+	 *
 	 * @param message
 	 */
-	public MethodNotImplementedException(String message)
-	{
+	public MethodNotImplementedException(String message) {
 		super(message);
 	}
 }

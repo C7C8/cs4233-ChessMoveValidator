@@ -21,46 +21,43 @@
  */
 package edu.wpi.dyn.ravana.cs4233.cmv;
 
-import java.util.*;
+import java.util.Map;
 
 /**
  * This class represents the chess board for the move validation assignment.
  * It describes the methods that you can call to satisfy the assignment. All of the tests for
- * this assignment will pass a ChessBoard instance to the tests. The board will 
+ * this assignment will pass a ChessBoard instance to the tests. The board will
  * have the configuration that is to be tested.
- * 
  * NOTE: Students MAY NOT modify this class.
+ *
  * @version Jan 25, 2019
  */
-public final class ChessBoard
-{
+public final class ChessBoard {
 	private final Map<Square, ChessPiece> theBoard;
-	
+
 	/**
 	 * Constructor that takes the configuration.
+	 *
 	 * @param configuration the Map
 	 */
-	public ChessBoard(Map<Square, ChessPiece> configuration)
-	{
+	public ChessBoard(Map<Square, ChessPiece> configuration) {
 		theBoard = configuration;
 	}
-	
+
 	/**
 	 * @param square the square to query
 	 * @return the ChessPiece at the specified square or null if there is none
 	 * @throws CMVException if the square is invalid
 	 */
-	public ChessPiece getPieceAt(Square square) 
-	{
+	public ChessPiece getPieceAt(Square square) {
 		return theBoard.get(square);
 	}
-	
+
 	/**
 	 * @param square
 	 * @return true if the square has a piece on it, false otherwise
 	 */
-	public boolean isSquareOccupied(Square square)
-	{
+	public boolean isSquareOccupied(Square square) {
 		return theBoard.get(square) != null;
 	}
 }
