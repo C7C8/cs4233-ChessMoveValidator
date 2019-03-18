@@ -22,6 +22,7 @@
 
 package edu.wpi.dyn.ravana.cs4233.cmv.pieces;
 
+import edu.wpi.dyn.ravana.cs4233.cmv.ChessBoard;
 import edu.wpi.dyn.ravana.cs4233.cmv.ChessPiece;
 import edu.wpi.dyn.ravana.cs4233.cmv.ChessPieceDefined;
 import edu.wpi.dyn.ravana.cs4233.cmv.Square;
@@ -40,9 +41,9 @@ public class Pawn extends ChessPieceDefined {
 	 * @see ChessPieceDefined
 	 */
 	@Override
-	public boolean canMove(Square from, Square to, ChessPiece at) {
-		int dx = from.getColumn() - to.getColumn();
-		int dy = from.getRow() - to.getRow();
+	public boolean canMove(Square from, Square to, ChessBoard board) {
+		final int dx = from.getColumn() - to.getColumn();
+		final int dy = from.getRow() - to.getRow();
 
 		// Can immediately accept the simple one-forward movement case. Everything after this is for the capture case.
 		final int dir = getPieceColor() == PieceColor.WHITE ? -1 : 1;
@@ -62,7 +63,7 @@ public class Pawn extends ChessPieceDefined {
 			return false;
 
 		// ...and ONLY when capturing
-		return (at != null) && (at.getPieceColor() != getPieceColor());
+		return board.isSquareOccupied(to);
 	}
 
 	/**

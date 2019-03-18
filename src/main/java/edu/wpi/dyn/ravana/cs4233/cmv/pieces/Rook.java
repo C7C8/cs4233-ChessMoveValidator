@@ -22,6 +22,7 @@
 
 package edu.wpi.dyn.ravana.cs4233.cmv.pieces;
 
+import edu.wpi.dyn.ravana.cs4233.cmv.ChessBoard;
 import edu.wpi.dyn.ravana.cs4233.cmv.ChessPiece;
 import edu.wpi.dyn.ravana.cs4233.cmv.ChessPieceDefined;
 import edu.wpi.dyn.ravana.cs4233.cmv.Square;
@@ -42,10 +43,15 @@ public class Rook extends ChessPieceDefined {
 	 * @see ChessPieceDefined
 	 */
 	@Override
-	public boolean canMove(Square from, Square to, ChessPiece at) {
-		int dx = from.getColumn() - to.getColumn();
-		int dy = from.getRow() - to.getRow();
-		return (dx != 0 && dy == 0) || (dx == 0 && dy != 0);
+	public boolean canMove(Square from, Square to, ChessBoard board) {
+		final int dx = from.getColumn() - to.getColumn();
+		final int dy = from.getRow() - to.getRow();
+
+		// Enforce movement constraint
+		if (dx != 0 && dy != 0)
+			return false;
+
+		return pathClear(from, to, board);
 	}
 
 	/**

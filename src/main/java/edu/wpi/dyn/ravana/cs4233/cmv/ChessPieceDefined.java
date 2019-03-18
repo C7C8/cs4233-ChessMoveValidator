@@ -22,6 +22,8 @@
 
 package edu.wpi.dyn.ravana.cs4233.cmv;
 
+import static edu.wpi.dyn.ravana.cs4233.cmv.SquareFactory.makeSquare;
+
 /**
  * Extension of the ChessPiece interface to provide a canMove() function.
  * Implemented as an abstract class since I wanted to provide a constructor
@@ -31,7 +33,7 @@ package edu.wpi.dyn.ravana.cs4233.cmv;
  * interface, but I didn't want to touch it.
  */
 public abstract class ChessPieceDefined implements ChessPiece {
-	PieceColor color;
+	protected PieceColor color;
 
 	public ChessPieceDefined(PieceColor color) {
 		this.color = color;
@@ -46,8 +48,38 @@ public abstract class ChessPieceDefined implements ChessPiece {
 	 * Determines whether the piece can move from its current square to a new one
 	 * @param from Source square
 	 * @param to Destination square
-	 * @param at What's at the square, if anything
+	 * @param board Chess board
 	 * @return True if move is possible, false if otherwise.
 	 */
-	public abstract boolean canMove(Square from, Square to, ChessPiece at);
+	public abstract boolean canMove(Square from, Square to, ChessBoard board);
+
+	/**
+	 * Determines whether the given path is clear or not
+	 * @param from Source square, not included in the path.
+	 * @param to Destination square, not included in the path.
+	 * @param board Board to search for.
+	 * @return True if the path is clear (no piece in the way), false otherwise)
+	 */
+	protected boolean pathClear(Square from, Square to, ChessBoard board) {
+		final int dx = from.getColumn() - to.getColumn();
+		final int dy = from.getRow() - to.getRow();
+
+		// Idiot check -- we can't perform that path calculation.
+		if (Math.abs(dx) > 1 || Math.abs(dy) > 1)
+			return true;
+
+		// Loop over the entire path, from start to end (exclusive) looking for pieces in the way.
+		int x = from.getColumn() + dx;
+		int y = from.getRow() + dy;
+		do {
+			Square s = makeSquare((char) x, y);
+			if (board.isSquareOccupied(s))
+				return false;
+
+			x += dx;
+			y += dy;
+		} while ((x != to.getColumn()) && (y != to.getRow()));
+
+		return true;
+	}
 }

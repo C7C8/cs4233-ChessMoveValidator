@@ -70,7 +70,6 @@ public class MoveValidator {
 		//
 		// This also provides a good environment for pieces to be built in, since they now only
 		// have to worry about their movement rules, and not things like bounds or sanity checks
-		ChessPieceDefined at = (ChessPieceDefined) board.getPieceAt(to);
-		return piece.canMove(from, to, at);
+		return piece.canMove(from, to, board);
 	}
 }

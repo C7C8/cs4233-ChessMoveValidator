@@ -22,6 +22,7 @@
 
 package edu.wpi.dyn.ravana.cs4233.cmv.pieces;
 
+import edu.wpi.dyn.ravana.cs4233.cmv.ChessBoard;
 import edu.wpi.dyn.ravana.cs4233.cmv.ChessPiece;
 import edu.wpi.dyn.ravana.cs4233.cmv.ChessPieceDefined;
 import edu.wpi.dyn.ravana.cs4233.cmv.Square;
@@ -43,10 +44,10 @@ public class King extends ChessPieceDefined {
 	 * @see ChessPieceDefined
 	 */
 	@Override
-	public boolean canMove(Square from, Square to, ChessPiece at) {
-		int dx = from.getColumn() - to.getColumn();
-		int dy = from.getRow() - to.getRow();
-		return Math.abs(dx) <= 1 && Math.abs(dy) <= 1;
+	public boolean canMove(Square from, Square to, ChessBoard board) {
+		final int dx = Math.abs(from.getColumn() - to.getColumn());
+		final int dy = Math.abs(from.getRow() - to.getRow());
+		return dx <= 1 && dy <= 1;
 	}
 
 	/**
