@@ -40,16 +40,31 @@ public class MoveValidator {
 	 * @throws CMVException if there is an error, such as no piece on the from square
 	 */
 	public static boolean canMove(ChessBoard board, Square from, Square to) {
-		// Idiot check
+		// Idiot check: Make sure there's a piece on the 'from' square
 		if (!board.isSquareOccupied(from))
 			throw new CMVException("Square unoccupied");
 
-		ChessPiece piece = board.getPieceAt(from);
+		// Idiot check round 2: Check bounds
+		Square[] squares = {from, to};
+		for (Square square : squares) {
+			if (square.getColumn() > 'h' || square.getColumn() < 'a')
+				return false;
+			if (square.getRow() > 8 || square.getRow() < 1)
+				return false;
+		}
+
 
 		// Can't move a piece on top of another of the same color
+		ChessPieceDefined piece = (ChessPieceDefined) board.getPieceAt(from);
 		if (board.isSquareOccupied(to) && board.getPieceAt(to).getPieceColor() == piece.getPieceColor())
 			return false;
+		ChessPieceDefined at = (ChessPieceDefined) board.getPieceAt(to);
 
-		return true;
+		// Leave the final decision of whether the piece can move or not up to the piece itself.
+		// This helps prevent the MoveValidator class from becoming enormous and littered with
+		// special-case code for each and every piece, and follows the object-oriented
+		// paradigm by leaving the ultimate behavior of classes (or the objects they represent)
+		// to the classes themselves.
+		return piece.canMove(from, to, at);
 	}
 }
