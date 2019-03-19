@@ -54,19 +54,22 @@ public abstract class ChessPieceDefined implements ChessPiece {
 	public abstract boolean canMove(Square from, Square to, ChessBoard board);
 
 	/**
-	 * Determines whether the given path is clear or not
+	 * Determines whether the given path is clear or not. Note that this does NOT perform bounds checks or color checks.
 	 * @param from Source square, not included in the path.
 	 * @param to Destination square, not included in the path.
 	 * @param board Board to search for.
-	 * @return True if the path is clear (no piece in the way), false otherwise)
+	 * @return True if the path is clear (no piece in the way), false otherwise.
 	 */
 	protected boolean pathClear(Square from, Square to, ChessBoard board) {
-		final int dx = from.getColumn() - to.getColumn();
-		final int dy = from.getRow() - to.getRow();
+		int dx = to.getColumn() - from.getColumn();
+		int dy = to.getRow() - from.getRow();
 
-		// Idiot check -- we can't perform that path calculation.
-		if (Math.abs(dx) > 1 || Math.abs(dy) > 1)
+		// Accept the simple case where movement distance is one square in any direction
+		if (Math.abs(dx) <= 1 && Math.abs(dy) <= 1)
 			return true;
+
+		dx /= (dx == 0 ? 1 : Math.abs(dx)); // Reduce numbers down to 0, 1, or -1
+		dy /= (dy == 0 ? 1 : Math.abs(dy));
 
 		// Loop over the entire path, from start to end (exclusive) looking for pieces in the way.
 		int x = from.getColumn() + dx;

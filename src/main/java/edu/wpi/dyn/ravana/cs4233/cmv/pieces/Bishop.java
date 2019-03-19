@@ -48,7 +48,7 @@ public class Bishop extends ChessPieceDefined {
 		final int dy = from.getRow() - to.getRow();
 
 		// Diagonality check is simple: make sure the difference in X is the same as the difference in Y.
-		if (dx != dy)
+		if (Math.abs(dx) != Math.abs(dy))
 				return false;
 
 		return pathClear(from, to, board);

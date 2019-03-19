@@ -47,7 +47,7 @@ public class Queen extends ChessPieceDefined {
 		final int dy = from.getRow() - to.getRow();
 
 		// Enforce both rook and bishop constraints
-		if ((dx != dy) && (dx != 0 && dy != 0))
+		if ((Math.abs(dx) != Math.abs(dy)) && (dx != 0 && dy != 0))
 			return false;
 
 		return pathClear(from, to, board);

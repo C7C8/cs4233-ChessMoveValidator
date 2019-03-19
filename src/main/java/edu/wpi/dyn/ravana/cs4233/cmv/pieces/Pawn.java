@@ -42,24 +42,20 @@ public class Pawn extends ChessPieceDefined {
 	 */
 	@Override
 	public boolean canMove(Square from, Square to, ChessBoard board) {
-		final int dx = from.getColumn() - to.getColumn();
-		final int dy = from.getRow() - to.getRow();
+		final int dx = to.getColumn() - from.getColumn();
+		final int dy = to.getRow() - from.getRow();
 
 		// Can immediately accept the simple one-forward movement case. Everything after this is for the capture case.
-		final int dir = getPieceColor() == PieceColor.WHITE ? -1 : 1;
-		if (dx == 0 && dy == dir && board.isSquareOccupied(to))
+		final int dir = getPieceColor() == PieceColor.WHITE ? 1 : -1;
+		if (dx == 0 && dy == dir && !board.isSquareOccupied(to))
 			return true;
 
 		// Idiot check to make sure the pawn isn't moving too much
 		if (Math.abs(dx) > 1 || Math.abs(dy) > 1)
 			return false;
 
-		// If a pawn is moving left/right, it has to be moving up/down too
-		if (Math.abs(dx) == 1 || Math.abs(dy) != 1)
-			return false;
-
-		// ...but it has to be in the right direction, depending on color...
-		if (dy != dir)
+		// Ensured that we're capturing at this point, make sure the pawn is going diagonal
+		if (Math.abs(dx) != 1 || dy != dir)
 			return false;
 
 		// ...and ONLY when capturing
