@@ -47,7 +47,7 @@ public class Pawn extends ChessPieceDefined {
 
 		// Can immediately accept the simple one-forward movement case. Everything after this is for the capture case.
 		final int dir = getPieceColor() == PieceColor.WHITE ? -1 : 1;
-		if (dx == 0 && dy == dir)
+		if (dx == 0 && dy == dir && board.isSquareOccupied(to))
 			return true;
 
 		// Idiot check to make sure the pawn isn't moving too much
