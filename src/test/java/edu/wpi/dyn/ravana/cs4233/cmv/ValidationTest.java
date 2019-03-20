@@ -106,14 +106,14 @@ class ValidationTest
 	@Test
 	void outOfBounds() {
 		// Rook at A1 to (A-1)1
-		Square from = makeSquare('a', 1);
-		Square to = makeSquare((char)('a'-1), 1);
-		assertFalse(canMove(board, from, to));
+		final Square from = makeSquare('a', 1);
+		final Square to = makeSquare((char)('a'-1), 1);
+		assertThrows(CMVException.class, () -> canMove(board, from, to));
 
 		// Queen at C8 to C9
-		from = makeSquare('c', 8);
-		to = makeSquare('c', 9);
-		assertFalse(canMove(board, from, to));
+		final Square from2 = makeSquare('c', 8); // Locals in a lambda have to be final or effectively final
+		final Square to2 = makeSquare('c', 9);
+		assertThrows(CMVException.class, () -> canMove(board, from2, to2));
 	}
 
 	@Test

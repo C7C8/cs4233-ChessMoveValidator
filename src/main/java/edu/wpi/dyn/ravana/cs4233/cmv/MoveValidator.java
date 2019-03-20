@@ -48,9 +48,9 @@ public class MoveValidator {
 		Square[] squares = {from, to};
 		for (Square square : squares) {
 			if (square.getColumn() > 'h' || square.getColumn() < 'a')
-				return false;
+				throw new CMVException("Invalid square column");
 			if (square.getRow() > 8 || square.getRow() < 1)
-				return false;
+				throw new CMVException("Invalid square row");
 		}
 
 		// Can't move to the same spot we're already in
