@@ -20,39 +20,35 @@
  * Design, at Worcester Polytechnic Institute.
  */
 
-package edu.wpi.dyn.ravana.cs4233.cmv.pieces;
+package cmv.pieces;
 
-import edu.wpi.dyn.ravana.cs4233.cmv.ChessBoard;
-import edu.wpi.dyn.ravana.cs4233.cmv.ChessPiece;
-import edu.wpi.dyn.ravana.cs4233.cmv.ChessPieceDefined;
-import edu.wpi.dyn.ravana.cs4233.cmv.Square;
+import cmv.ChessBoard;
+import cmv.ChessPiece;
+import cmv.ChessPieceDefined;
+import cmv.Square;
 
 /**
- * Class representing bishops.
+ * Class representing a knight
  */
-public class Bishop extends ChessPieceDefined {
+public class Knight extends ChessPieceDefined {
 	/**
 	 * @see ChessPieceDefined
 	 */
-	public Bishop(PieceColor color) {
+	public Knight(PieceColor color) {
 		super(color);
 	}
 
 	/**
-	 * Verifies whether the bishop is moving diagonally only.
+	 * Validates the knight's move. Knights must always move either 1 forward and 2 to the side, or 2 forward and 1
+	 * to the side. They can also skip anything they like.
 	 *
 	 * @see ChessPieceDefined
 	 */
 	@Override
 	public boolean canMove(Square from, Square to, ChessBoard board) {
-		final int dx = from.getColumn() - to.getColumn();
-		final int dy = from.getRow() - to.getRow();
-
-		// Diagonality check is simple: make sure the difference in X is the same as the difference in Y.
-		if (Math.abs(dx) != Math.abs(dy))
-			return false;
-
-		return pathClear(from, to, board);
+		final int dx = Math.abs(from.getColumn() - to.getColumn());
+		final int dy = Math.abs(from.getRow() - to.getRow());
+		return (dx == 1 && dy == 2) || (dx == 2 && dy == 1);
 	}
 
 	/**
@@ -60,6 +56,6 @@ public class Bishop extends ChessPieceDefined {
 	 */
 	@Override
 	public PieceType getPieceType() {
-		return PieceType.BISHOP;
+		return PieceType.KNIGHT;
 	}
 }

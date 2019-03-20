@@ -20,9 +20,7 @@
  * Design, at Worcester Polytechnic Institute.
  */
 
-package edu.wpi.dyn.ravana.cs4233.cmv;
-
-import static edu.wpi.dyn.ravana.cs4233.cmv.SquareFactory.makeSquare;
+package cmv;
 
 /**
  * Extension of the ChessPiece interface to provide a canMove() function.
@@ -80,7 +78,7 @@ public abstract class ChessPieceDefined implements ChessPiece {
 		char x = (char) (from.getColumn() + dx);
 		int y = from.getRow() + dy;
 		do {
-			Square s = makeSquare(x, y);
+			Square s = SquareFactory.makeSquare(x, y);
 			if (board.isSquareOccupied(s))
 				return false;
 

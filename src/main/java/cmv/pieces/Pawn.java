@@ -20,12 +20,12 @@
  * Design, at Worcester Polytechnic Institute.
  */
 
-package edu.wpi.dyn.ravana.cs4233.cmv.pieces;
+package cmv.pieces;
 
-import edu.wpi.dyn.ravana.cs4233.cmv.ChessBoard;
-import edu.wpi.dyn.ravana.cs4233.cmv.ChessPiece;
-import edu.wpi.dyn.ravana.cs4233.cmv.ChessPieceDefined;
-import edu.wpi.dyn.ravana.cs4233.cmv.Square;
+import cmv.ChessBoard;
+import cmv.ChessPiece;
+import cmv.ChessPieceDefined;
+import cmv.Square;
 
 public class Pawn extends ChessPieceDefined {
 	/**

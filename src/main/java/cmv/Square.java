@@ -19,7 +19,7 @@
  * This file was developed as part of CS 4233: Object-Oriented Analysis &
  * Design, at Worcester Polytechnic Institute.
  */
-package edu.wpi.dyn.ravana.cs4233.cmv;
+package cmv;
 
 /**
  * A data structure that contains the row (a-h) and column (1-8) of a square on

@@ -19,28 +19,47 @@
  * This file was developed as part of CS 4233: Object-Oriented Analysis &
  * Design, at Worcester Polytechnic Institute.
  */
-package edu.wpi.dyn.ravana.cs4233.cmv;
+
+package cmv.pieces;
+
+import cmv.ChessBoard;
+import cmv.ChessPiece;
+import cmv.ChessPieceDefined;
+import cmv.Square;
 
 /**
- * This class is a factory that creates Square instances. It has only one
- * static method that creates the instance of the Square or Square subclass.
- * Students must implement this method as appropriate for their solution.
- * The master tests used for grading will invoke this method to get the
- * Square instances used in tests.
- * NOTE: Students must implement the single static method. You may NOT
- * change the signature of the method.
- *
- * @version Mar 8, 2019
+ * Class representing rooks.
  */
-public final class SquareFactory {
+public class Rook extends ChessPieceDefined {
 	/**
-	 * Return the instance of the Square used in the project.
-	 *
-	 * @param column
-	 * @param row
-	 * @return the Square instance
+	 * @see ChessPieceDefined
 	 */
-	public static Square makeSquare(char column, int row) {
-		return new Square(column, row);
+	public Rook(PieceColor color) {
+		super(color);
+	}
+
+	/**
+	 * Verifies whether the rook is moving in any non-diagonal direction.
+	 *
+	 * @see ChessPieceDefined
+	 */
+	@Override
+	public boolean canMove(Square from, Square to, ChessBoard board) {
+		final int dx = from.getColumn() - to.getColumn();
+		final int dy = from.getRow() - to.getRow();
+
+		// Enforce movement constraint
+		if (dx != 0 && dy != 0)
+			return false;
+
+		return pathClear(from, to, board);
+	}
+
+	/**
+	 * @see ChessPiece;
+	 */
+	@Override
+	public PieceType getPieceType() {
+		return PieceType.ROOK;
 	}
 }

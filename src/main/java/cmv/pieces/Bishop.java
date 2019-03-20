@@ -20,26 +20,26 @@
  * Design, at Worcester Polytechnic Institute.
  */
 
-package edu.wpi.dyn.ravana.cs4233.cmv.pieces;
+package cmv.pieces;
 
-import edu.wpi.dyn.ravana.cs4233.cmv.ChessBoard;
-import edu.wpi.dyn.ravana.cs4233.cmv.ChessPiece;
-import edu.wpi.dyn.ravana.cs4233.cmv.ChessPieceDefined;
-import edu.wpi.dyn.ravana.cs4233.cmv.Square;
+import cmv.ChessBoard;
+import cmv.ChessPiece;
+import cmv.ChessPieceDefined;
+import cmv.Square;
 
 /**
- * Class representing rooks.
+ * Class representing bishops.
  */
-public class Rook extends ChessPieceDefined {
+public class Bishop extends ChessPieceDefined {
 	/**
 	 * @see ChessPieceDefined
 	 */
-	public Rook(PieceColor color) {
+	public Bishop(PieceColor color) {
 		super(color);
 	}
 
 	/**
-	 * Verifies whether the rook is moving in any non-diagonal direction.
+	 * Verifies whether the bishop is moving diagonally only.
 	 *
 	 * @see ChessPieceDefined
 	 */
@@ -48,18 +48,18 @@ public class Rook extends ChessPieceDefined {
 		final int dx = from.getColumn() - to.getColumn();
 		final int dy = from.getRow() - to.getRow();
 
-		// Enforce movement constraint
-		if (dx != 0 && dy != 0)
+		// Diagonality check is simple: make sure the difference in X is the same as the difference in Y.
+		if (Math.abs(dx) != Math.abs(dy))
 			return false;
 
 		return pathClear(from, to, board);
 	}
 
 	/**
-	 * @see ChessPiece;
+	 * @see ChessPiece
 	 */
 	@Override
 	public PieceType getPieceType() {
-		return PieceType.ROOK;
+		return PieceType.BISHOP;
 	}
 }

@@ -20,35 +20,39 @@
  * Design, at Worcester Polytechnic Institute.
  */
 
-package edu.wpi.dyn.ravana.cs4233.cmv.pieces;
+package cmv.pieces;
 
-import edu.wpi.dyn.ravana.cs4233.cmv.ChessBoard;
-import edu.wpi.dyn.ravana.cs4233.cmv.ChessPiece;
-import edu.wpi.dyn.ravana.cs4233.cmv.ChessPieceDefined;
-import edu.wpi.dyn.ravana.cs4233.cmv.Square;
+import cmv.ChessBoard;
+import cmv.ChessPiece;
+import cmv.ChessPieceDefined;
+import cmv.Square;
 
 /**
- * Class representing a knight
+ * Class representing queens.
  */
-public class Knight extends ChessPieceDefined {
+public class Queen extends ChessPieceDefined {
 	/**
 	 * @see ChessPieceDefined
 	 */
-	public Knight(PieceColor color) {
+	public Queen(PieceColor color) {
 		super(color);
 	}
 
 	/**
-	 * Validates the knight's move. Knights must always move either 1 forward and 2 to the side, or 2 forward and 1
-	 * to the side. They can also skip anything they like.
+	 * Verifies the queen's move is purely diagonal or purely rook-like
 	 *
 	 * @see ChessPieceDefined
 	 */
 	@Override
 	public boolean canMove(Square from, Square to, ChessBoard board) {
-		final int dx = Math.abs(from.getColumn() - to.getColumn());
-		final int dy = Math.abs(from.getRow() - to.getRow());
-		return (dx == 1 && dy == 2) || (dx == 2 && dy == 1);
+		final int dx = from.getColumn() - to.getColumn();
+		final int dy = from.getRow() - to.getRow();
+
+		// Enforce both rook and bishop constraints
+		if ((Math.abs(dx) != Math.abs(dy)) && (dx != 0 && dy != 0))
+			return false;
+
+		return pathClear(from, to, board);
 	}
 
 	/**
@@ -56,6 +60,6 @@ public class Knight extends ChessPieceDefined {
 	 */
 	@Override
 	public PieceType getPieceType() {
-		return PieceType.KNIGHT;
+		return PieceType.QUEEN;
 	}
 }

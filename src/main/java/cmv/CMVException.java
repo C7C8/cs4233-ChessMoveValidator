@@ -19,43 +19,21 @@
  * This file was developed as part of CS 4233: Object-Oriented Analysis &
  * Design, at Worcester Polytechnic Institute.
  */
-
-package edu.wpi.dyn.ravana.cs4233.cmv.pieces;
-
-import edu.wpi.dyn.ravana.cs4233.cmv.ChessBoard;
-import edu.wpi.dyn.ravana.cs4233.cmv.ChessPiece;
-import edu.wpi.dyn.ravana.cs4233.cmv.ChessPieceDefined;
-import edu.wpi.dyn.ravana.cs4233.cmv.Square;
+package cmv;
 
 /**
- * Class representing kings.
+ * Exception that is used to indicate any error when determining whether a move may be
+ * made or not.
+ *
+ * @version Feb 18, 2019
  */
-public class King extends ChessPieceDefined {
-
+public class CMVException extends RuntimeException {
 	/**
-	 * @see ChessPieceDefined
-	 */
-	public King(PieceColor color) {
-		super(color);
-	}
-
-	/**
-	 * Verifies whether the King is moving one space only, in any direction.
+	 * Sole constructor.
 	 *
-	 * @see ChessPieceDefined
+	 * @param message the reason for the error
 	 */
-	@Override
-	public boolean canMove(Square from, Square to, ChessBoard board) {
-		final int dx = Math.abs(from.getColumn() - to.getColumn());
-		final int dy = Math.abs(from.getRow() - to.getRow());
-		return dx <= 1 && dy <= 1;
-	}
-
-	/**
-	 * @see ChessPiece
-	 */
-	@Override
-	public PieceType getPieceType() {
-		return PieceType.KING;
+	public CMVException(String message) {
+		super(message);
 	}
 }

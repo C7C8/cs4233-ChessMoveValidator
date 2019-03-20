@@ -20,11 +20,9 @@
  * Design, at Worcester Polytechnic Institute.
  */
 
-package edu.wpi.dyn.ravana.cs4233.cmv;
+package cmv;
 
-import edu.wpi.dyn.ravana.cs4233.cmv.ChessPiece.PieceColor;
-import edu.wpi.dyn.ravana.cs4233.cmv.ChessPiece.PieceType;
-import edu.wpi.dyn.ravana.cs4233.cmv.pieces.*;
+import cmv.pieces.*;
 
 /**
  * A simple factory for creating chess pieces. This needs to be implemented
@@ -41,7 +39,7 @@ public class ChessPieceFactory {
 	 * @param type  Type of piece
 	 * @return Constructed piece object. Underlying class varies with type.
 	 */
-	public static ChessPiece makePiece(PieceColor color, PieceType type) {
+	public static ChessPiece makePiece(ChessPiece.PieceColor color, ChessPiece.PieceType type) {
 
 		// To add more pieces (...not sure why you'd want to, but hey, flexibility! Right?) it's as easy as expanding
 		// this switch statement. No breaks are needed since the only thing in each is a return statement anyways.

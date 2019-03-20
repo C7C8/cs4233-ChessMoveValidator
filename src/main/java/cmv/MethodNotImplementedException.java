@@ -19,21 +19,21 @@
  * This file was developed as part of CS 4233: Object-Oriented Analysis &
  * Design, at Worcester Polytechnic Institute.
  */
-package edu.wpi.dyn.ravana.cs4233.cmv;
+package cmv;
 
 /**
- * Exception that is used to indicate any error when determining whether a move may be
- * made or not.
+ * Exception class for the method not implemented that is the default for some
+ * interface methods.
  *
- * @version Feb 18, 2019
+ * @version Jan 25, 2019
  */
-public class CMVException extends RuntimeException {
+public class MethodNotImplementedException extends RuntimeException {
 	/**
-	 * Sole constructor.
+	 * Message is required
 	 *
-	 * @param message the reason for the error
+	 * @param message
 	 */
-	public CMVException(String message) {
+	public MethodNotImplementedException(String message) {
 		super(message);
 	}
 }

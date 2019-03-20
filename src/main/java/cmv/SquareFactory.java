@@ -19,21 +19,28 @@
  * This file was developed as part of CS 4233: Object-Oriented Analysis &
  * Design, at Worcester Polytechnic Institute.
  */
-package edu.wpi.dyn.ravana.cs4233.cmv;
+package cmv;
 
 /**
- * Exception class for the method not implemented that is the default for some
- * interface methods.
+ * This class is a factory that creates Square instances. It has only one
+ * static method that creates the instance of the Square or Square subclass.
+ * Students must implement this method as appropriate for their solution.
+ * The master tests used for grading will invoke this method to get the
+ * Square instances used in tests.
+ * NOTE: Students must implement the single static method. You may NOT
+ * change the signature of the method.
  *
- * @version Jan 25, 2019
+ * @version Mar 8, 2019
  */
-public class MethodNotImplementedException extends RuntimeException {
+public final class SquareFactory {
 	/**
-	 * Message is required
+	 * Return the instance of the Square used in the project.
 	 *
-	 * @param message
+	 * @param column
+	 * @param row
+	 * @return the Square instance
 	 */
-	public MethodNotImplementedException(String message) {
-		super(message);
+	public static Square makeSquare(char column, int row) {
+		return new Square(column, row);
 	}
 }
