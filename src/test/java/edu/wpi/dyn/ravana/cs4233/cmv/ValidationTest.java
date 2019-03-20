@@ -260,12 +260,28 @@ class ValidationTest
 		// Pawn at B7 to B6 -- invalid, white pawn can't move backwards
 		to = makeSquare('b', 6);
 		assertFalse(canMove(board, from, to));
+
+		// Pawn at B8  to A7 -- invalid, diagonal move but none to capture
+		from = makeSquare('b', 8);
+		to = makeSquare('a', 7);
+		assertFalse(canMove(board, from, to));
 	}
 
 	@Test
 	void noPieceOnSource() {
 		Object[] sp = {};
 		assertThrows(CMVException.class, () -> canMove(makeBoard(sp), makeSquare('e', 2), makeSquare('e', 3)));
+	}
+
+	/**
+	 * Test for moves that should be valid if the piece were of a different color
+	 */
+	@Test
+	void colorCollision(){
+		// Black rook at A3 to black pawn at A8
+		Square to = makeSquare('a', 3);
+		Square from = makeSquare('a', 8);
+		assertFalse(canMove(board, from, to));
 	}
 
 	/**
