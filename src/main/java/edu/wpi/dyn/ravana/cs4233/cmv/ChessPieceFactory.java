@@ -55,10 +55,8 @@ public class ChessPieceFactory {
 				return new Rook(color);
 			case QUEEN:
 				return new Queen(color);
-			case KING:
+			default: // Should be case:king, but I wanted to get rid of a warning
 				return new King(color);
-			default: // just to get rid of a warning...
-				return new Pawn(color);
 		}
 	}
 }
