@@ -72,7 +72,7 @@ public abstract class ChessPieceDefined implements ChessPiece {
 		dy /= (dy == 0 ? 1 : Math.abs(dy));
 
 		// Loop over the entire path, from start to end (exclusive) looking for pieces in the way.
-		int x = from.getColumn() + dx;
+		char x = (char)(from.getColumn() + dx);
 		int y = from.getRow() + dy;
 		do {
 			Square s = makeSquare((char) x, y);
@@ -81,7 +81,7 @@ public abstract class ChessPieceDefined implements ChessPiece {
 
 			x += dx;
 			y += dy;
-		} while ((x != to.getColumn()) && (y != to.getRow()));
+		} while ((x != to.getColumn()) || (y != to.getRow()));
 
 		return true;
 	}

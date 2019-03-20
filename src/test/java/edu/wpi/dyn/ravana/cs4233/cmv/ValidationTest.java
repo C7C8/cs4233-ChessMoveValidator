@@ -279,8 +279,38 @@ class ValidationTest
 	@Test
 	void colorCollision(){
 		// Black rook at A3 to black pawn at A8
-		Square to = makeSquare('a', 3);
-		Square from = makeSquare('a', 8);
+		Square from = makeSquare('a', 3);
+		Square to = makeSquare('a', 8);
+		assertFalse(canMove(board, from, to));
+
+		// White rook at A1 to white queen at C1
+		from = makeSquare('a', 1);
+		to = makeSquare('c', 1);
+		assertFalse(canMove(board, from, to));
+	}
+
+	/**
+	 * Test for moves that would be valid were there not a piece in the way
+	 */
+	@Test
+	void pathClear() {
+		// Queen at C1 to H1 -- invalid, bishop in the way (horizontal)
+		Square from = makeSquare('c', 1);
+		Square to = makeSquare('h', 1);
+		assertFalse(canMove(board, from, to));
+
+		// Queen at C1 to D1 -- valid, nothing in the way (horizontal)
+		to = makeSquare('d', 1);
+		assertTrue(canMove(board, from, to));
+
+		// Rook at A1 to A7 -- invalid, rook in the way (vertical)
+		from = makeSquare('a', 1);
+		to = makeSquare('a', 7);
+		assertFalse(canMove(board, from, to));
+
+		// Queen at C8 to A6 -- invalid, pawn in the way (diagonal)
+		from = makeSquare('c', 8);
+		to = makeSquare('a', 6);
 		assertFalse(canMove(board, from, to));
 	}
 
