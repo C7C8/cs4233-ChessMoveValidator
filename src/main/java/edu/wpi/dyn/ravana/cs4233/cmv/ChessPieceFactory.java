@@ -36,8 +36,9 @@ public class ChessPieceFactory {
 
 	/**
 	 * Make chess pieces!
+	 *
 	 * @param color Color of piece
-	 * @param type Type of piece
+	 * @param type  Type of piece
 	 * @return Constructed piece object. Underlying class varies with type.
 	 */
 	public static ChessPiece makePiece(PieceColor color, PieceType type) {

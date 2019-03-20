@@ -46,8 +46,9 @@ public abstract class ChessPieceDefined implements ChessPiece {
 
 	/**
 	 * Determines whether the piece can move from its current square to a new one
-	 * @param from Source square
-	 * @param to Destination square
+	 *
+	 * @param from  Source square
+	 * @param to    Destination square
 	 * @param board Chess board
 	 * @return True if move is possible, false if otherwise.
 	 */
@@ -55,8 +56,9 @@ public abstract class ChessPieceDefined implements ChessPiece {
 
 	/**
 	 * Determines whether the given path is clear or not. Note that this does NOT perform bounds checks or color checks.
-	 * @param from Source square, not included in the path.
-	 * @param to Destination square, not included in the path.
+	 *
+	 * @param from  Source square, not included in the path.
+	 * @param to    Destination square, not included in the path.
 	 * @param board Board to search for.
 	 * @return True if the path is clear (no piece in the way), false otherwise.
 	 */
@@ -72,10 +74,10 @@ public abstract class ChessPieceDefined implements ChessPiece {
 		dy /= (dy == 0 ? 1 : Math.abs(dy));
 
 		// Loop over the entire path, from start to end (exclusive) looking for pieces in the way.
-		char x = (char)(from.getColumn() + dx);
+		char x = (char) (from.getColumn() + dx);
 		int y = from.getRow() + dy;
 		do {
-			Square s = makeSquare((char) x, y);
+			Square s = makeSquare(x, y);
 			if (board.isSquareOccupied(s))
 				return false;
 

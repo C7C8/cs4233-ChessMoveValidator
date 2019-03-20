@@ -40,6 +40,7 @@ public class Rook extends ChessPieceDefined {
 
 	/**
 	 * Verifies whether the rook is moving in any non-diagonal direction.
+	 *
 	 * @see ChessPieceDefined
 	 */
 	@Override

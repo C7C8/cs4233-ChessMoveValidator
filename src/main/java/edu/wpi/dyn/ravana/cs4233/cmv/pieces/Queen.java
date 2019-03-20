@@ -39,6 +39,7 @@ public class Queen extends ChessPieceDefined {
 
 	/**
 	 * Verifies the queen's move is purely diagonal or purely rook-like
+	 *
 	 * @see ChessPieceDefined
 	 */
 	@Override

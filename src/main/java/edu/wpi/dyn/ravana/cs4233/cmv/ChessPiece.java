@@ -32,8 +32,9 @@ package edu.wpi.dyn.ravana.cs4233.cmv;
  * @version Jan 25, 2019
  */
 public interface ChessPiece {
-	public enum PieceType {KING, QUEEN, BISHOP, KNIGHT, ROOK, PAWN}
-	public enum PieceColor {WHITE, BLACK}
+	enum PieceType {KING, QUEEN, BISHOP, KNIGHT, ROOK, PAWN}
+
+	enum PieceColor {WHITE, BLACK}
 
 	/**
 	 * @return the piece type

@@ -38,6 +38,7 @@ public class Pawn extends ChessPieceDefined {
 	/**
 	 * Verifies whether the pawn is either moving straight forward, or is going diagonally forward in one direction or
 	 * the other to capture a piece.
+	 *
 	 * @see ChessPieceDefined
 	 */
 	@Override

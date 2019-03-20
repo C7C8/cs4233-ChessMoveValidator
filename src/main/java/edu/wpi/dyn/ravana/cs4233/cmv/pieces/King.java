@@ -41,6 +41,7 @@ public class King extends ChessPieceDefined {
 
 	/**
 	 * Verifies whether the King is moving one space only, in any direction.
+	 *
 	 * @see ChessPieceDefined
 	 */
 	@Override

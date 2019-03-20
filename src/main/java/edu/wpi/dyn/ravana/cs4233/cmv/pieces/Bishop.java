@@ -40,6 +40,7 @@ public class Bishop extends ChessPieceDefined {
 
 	/**
 	 * Verifies whether the bishop is moving diagonally only.
+	 *
 	 * @see ChessPieceDefined
 	 */
 	@Override
@@ -49,7 +50,7 @@ public class Bishop extends ChessPieceDefined {
 
 		// Diagonality check is simple: make sure the difference in X is the same as the difference in Y.
 		if (Math.abs(dx) != Math.abs(dy))
-				return false;
+			return false;
 
 		return pathClear(from, to, board);
 	}

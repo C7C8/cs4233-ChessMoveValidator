@@ -41,6 +41,7 @@ public class Knight extends ChessPieceDefined {
 	/**
 	 * Validates the knight's move. Knights must always move either 1 forward and 2 to the side, or 2 forward and 1
 	 * to the side. They can also skip anything they like.
+	 *
 	 * @see ChessPieceDefined
 	 */
 	@Override
