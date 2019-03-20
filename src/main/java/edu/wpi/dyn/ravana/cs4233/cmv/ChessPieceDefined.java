@@ -39,6 +39,9 @@ public abstract class ChessPieceDefined implements ChessPiece {
 		this.color = color;
 	}
 
+	/**
+	 * @return Color of the piece
+	 */
 	@Override
 	public PieceColor getPieceColor() {
 		return color;

@@ -23,6 +23,7 @@
 package edu.wpi.dyn.ravana.cs4233.cmv.pieces;
 
 import edu.wpi.dyn.ravana.cs4233.cmv.ChessBoard;
+import edu.wpi.dyn.ravana.cs4233.cmv.ChessPiece;
 import edu.wpi.dyn.ravana.cs4233.cmv.ChessPieceDefined;
 import edu.wpi.dyn.ravana.cs4233.cmv.Square;
 
@@ -54,6 +55,9 @@ public class Queen extends ChessPieceDefined {
 		return pathClear(from, to, board);
 	}
 
+	/**
+	 * @see ChessPiece
+	 */
 	@Override
 	public PieceType getPieceType() {
 		return PieceType.QUEEN;
