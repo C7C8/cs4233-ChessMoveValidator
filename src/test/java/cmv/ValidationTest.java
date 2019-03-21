@@ -23,7 +23,6 @@
 package cmv;
 
 import cmv.pieces.*;
-import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.Test;
 
@@ -32,6 +31,9 @@ import java.util.HashMap;
 import java.util.Map;
 
 import static cmv.ChessPiece.PieceType.*;
+import static cmv.ChessPieceFactory.makePiece;
+import static cmv.MoveValidator.canMove;
+import static cmv.SquareFactory.makeSquare;
 import static org.junit.jupiter.api.Assertions.*;
 
 /**
@@ -49,7 +51,7 @@ class ValidationTest
 		// Parsing algorithm is my own, the format for FEN strings can be found here:
 		// https://en.wikipedia.org/wiki/Forsyth%E2%80%93Edwards_Notation
 
-		final String testBoard = "ppq5/1P1b4/3B4/3b2K1/8/r7/4N3/R1Q1B3";
+		final String testBoard = "ppq5/1P1b3p/3B4/3b2K1/8/r7/4N2P/R1Q1B3";
 		ArrayList<Object> sp = new ArrayList<>();
 		int y = 8;
 		for (String row: testBoard.split("/")) {
@@ -58,7 +60,7 @@ class ValidationTest
 				final char symbol = row.charAt(i);
 				// Decode letter and add to board
 				if (Character.isAlphabetic(symbol)) {
-					sp.add(SquareFactory.makeSquare(x, y));
+					sp.add(makeSquare(x, y));
 					final ChessPiece.PieceColor color = Character.isUpperCase(symbol) ? ChessPiece.PieceColor.WHITE : ChessPiece.PieceColor.BLACK;
 
 					ChessPiece newPiece;
@@ -102,173 +104,183 @@ class ValidationTest
 	@Test
 	void outOfBounds() {
 		// Rook at A1 to (A-1)1
-		final Square from = SquareFactory.makeSquare('a', 1);
-		final Square to = SquareFactory.makeSquare((char)('a'-1), 1);
-		assertThrows(CMVException.class, () -> MoveValidator.canMove(board, from, to));
+		final Square from = makeSquare('a', 1);
+		final Square to = makeSquare((char)('a'-1), 1);
+		assertThrows(CMVException.class, () -> canMove(board, from, to));
 
 		// Queen at C8 to C9
-		final Square from2 = SquareFactory.makeSquare('c', 8); // Locals in a lambda have to be final or effectively final
-		final Square to2 = SquareFactory.makeSquare('c', 9);
-		assertThrows(CMVException.class, () -> MoveValidator.canMove(board, from2, to2));
+		final Square from2 = makeSquare('c', 8); // Locals in a lambda have to be final or effectively final
+		final Square to2 = makeSquare('c', 9);
+		assertThrows(CMVException.class, () -> canMove(board, from2, to2));
 	}
 
 	@Test
 	void bishop() {
 		// Bishop at E1 to B4 -- valid
-		Square from = SquareFactory.makeSquare('e', 1);
-		Square to = SquareFactory.makeSquare('b', 4);
-		Assertions.assertEquals(BISHOP, board.getPieceAt(from).getPieceType());
-		Assertions.assertTrue(MoveValidator.canMove(board, from, to));
+		Square from = makeSquare('e', 1);
+		Square to = makeSquare('b', 4);
+		assertEquals(BISHOP, board.getPieceAt(from).getPieceType());
+		assertTrue(canMove(board, from, to));
 
 		//Bishop at E1 to H4 -- valid
-		to = SquareFactory.makeSquare('h', 4);
-		Assertions.assertTrue(MoveValidator.canMove(board, from, to));
+		to = makeSquare('h', 4);
+		assertTrue(canMove(board, from, to));
 
 		//Bishop at D6 to C5 -- valid
-		from = SquareFactory.makeSquare('d', 6);
-		to = SquareFactory.makeSquare('c', 5);
-		Assertions.assertTrue(MoveValidator.canMove(board, from, to));
+		from = makeSquare('d', 6);
+		to = makeSquare('c', 5);
+		assertTrue(canMove(board, from, to));
 
 		//Bishop at D6 to D5 -- invalid
-		to = SquareFactory.makeSquare('d', 5);
-		Assertions.assertFalse(MoveValidator.canMove(board, from, to));
+		to = makeSquare('d', 5);
+		assertFalse(canMove(board, from, to));
 	}
 
 	@Test
 	void rook() {
 		// Rook at A1 to B1 -- valid
-		Square from = SquareFactory.makeSquare('a', 1);
-		Square to = SquareFactory.makeSquare('b', 1);
-		Assertions.assertEquals(ChessPiece.PieceType.ROOK, board.getPieceAt(from).getPieceType());
-		Assertions.assertTrue(MoveValidator.canMove(board, from, to));
+		Square from = makeSquare('a', 1);
+		Square to = makeSquare('b', 1);
+		assertEquals(ChessPiece.PieceType.ROOK, board.getPieceAt(from).getPieceType());
+		assertTrue(canMove(board, from, to));
 
 		// Rook at A1 to A2 -- valid
-		to = SquareFactory.makeSquare('a', 2);
-		Assertions.assertTrue(MoveValidator.canMove(board, from, to));
+		to = makeSquare('a', 2);
+		assertTrue(canMove(board, from, to));
 
 		// Rook at A1 to B2 -- invalid
-		to = SquareFactory.makeSquare('b', 2);
-		Assertions.assertFalse(MoveValidator.canMove(board, from, to));
+		to = makeSquare('b', 2);
+		assertFalse(canMove(board, from, to));
 
 		// Rook at A3 to H3 -- valid
-		from = SquareFactory.makeSquare('a', 3);
-		to = SquareFactory.makeSquare('h', 3);
-		Assertions.assertTrue(MoveValidator.canMove(board, from, to));
+		from = makeSquare('a', 3);
+		to = makeSquare('h', 3);
+		assertTrue(canMove(board, from, to));
 
 		// Rook at A3 to H4 -- invalid (seriously, what the hell?)
-		to = SquareFactory.makeSquare('h', 4);
-		Assertions.assertFalse(MoveValidator.canMove(board, from, to));
+		to = makeSquare('h', 4);
+		assertFalse(canMove(board, from, to));
 	}
 
 	@Test
 	void queen() {
 		//Queen at C1 to A3 -- valid
-		Square from = SquareFactory.makeSquare('c', 1);
-		Square to = SquareFactory.makeSquare('a', 3);
-		Assertions.assertEquals(ChessPiece.PieceType.QUEEN, board.getPieceAt(from).getPieceType());
-		Assertions.assertEquals(ChessPiece.PieceColor.WHITE, board.getPieceAt(from).getPieceColor());
-		Assertions.assertTrue(MoveValidator.canMove(board, from, to));
+		Square from = makeSquare('c', 1);
+		Square to = makeSquare('a', 3);
+		assertEquals(ChessPiece.PieceType.QUEEN, board.getPieceAt(from).getPieceType());
+		assertEquals(ChessPiece.PieceColor.WHITE, board.getPieceAt(from).getPieceColor());
+		assertTrue(canMove(board, from, to));
 
 		// Queen at C1 to C8 -- valid
-		to = SquareFactory.makeSquare('c', 8);
-		Assertions.assertTrue(MoveValidator.canMove(board, from, to));
+		to = makeSquare('c', 8);
+		assertTrue(canMove(board, from, to));
 
 		//Queen at C1 to G3 -- invalid
-		to = SquareFactory.makeSquare('g', 3);
-		Assertions.assertFalse(MoveValidator.canMove(board, from, to));
+		to = makeSquare('g', 3);
+		assertFalse(canMove(board, from, to));
 	}
 
 	@Test
 	void king() {
 		// King at G5 to G6 -- valid
-		Square from = SquareFactory.makeSquare('g', 5);
-		Square to = SquareFactory.makeSquare('g', 6);
-		Assertions.assertEquals(KING, board.getPieceAt(from).getPieceType());
-		Assertions.assertTrue(MoveValidator.canMove(board, from, to));
+		Square from = makeSquare('g', 5);
+		Square to = makeSquare('g', 6);
+		assertEquals(KING, board.getPieceAt(from).getPieceType());
+		assertTrue(canMove(board, from, to));
 
 		//King at G5 to H5 -- valid
-		to = SquareFactory.makeSquare('h', 5);
-		Assertions.assertTrue(MoveValidator.canMove(board, from, to));
+		to = makeSquare('h', 5);
+		assertTrue(canMove(board, from, to));
 
 		// King at G5 to H6 -- valid
-		to = SquareFactory.makeSquare('h', 6);
-		Assertions.assertTrue(MoveValidator.canMove(board, from, to));
+		to = makeSquare('h', 6);
+		assertTrue(canMove(board, from, to));
 
 		// King at G5 to E5 -- invalid
-		to = SquareFactory.makeSquare('e', 5);
-		Assertions.assertFalse(MoveValidator.canMove(board, from, to));
+		to = makeSquare('e', 5);
+		assertFalse(canMove(board, from, to));
 	}
 
 	@Test
 	void knight() {
 		// Knight at E2 to D4 -- valid
-		Square from = SquareFactory.makeSquare('e', 2);
-		Square to = SquareFactory.makeSquare('d', 4);
-		Assertions.assertEquals(ChessPiece.PieceType.KNIGHT, board.getPieceAt(from).getPieceType());
-		Assertions.assertTrue(MoveValidator.canMove(board, from, to));
+		Square from = makeSquare('e', 2);
+		Square to = makeSquare('d', 4);
+		assertEquals(ChessPiece.PieceType.KNIGHT, board.getPieceAt(from).getPieceType());
+		assertTrue(canMove(board, from, to));
 
 		// Knight at E2 to F4 -- valid
-		to = SquareFactory.makeSquare('f', 4);
-		Assertions.assertTrue(MoveValidator.canMove(board, from, to));
+		to = makeSquare('f', 4);
+		assertTrue(canMove(board, from, to));
 
 		//Knight at E2 to G1 -- valid
-		to = SquareFactory.makeSquare('g', 1);
-		Assertions.assertTrue(MoveValidator.canMove(board, from, to));
+		to = makeSquare('g', 1);
+		assertTrue(canMove(board, from, to));
 
 		// Knight at E2 to E4 -- invalid
-		to = SquareFactory.makeSquare('e', 4);
-		Assertions.assertFalse(MoveValidator.canMove(board, from, to));
+		to = makeSquare('e', 4);
+		assertFalse(canMove(board, from, to));
 
 		//Knight at E2 to G2 -- invalid
-		to = SquareFactory.makeSquare('g', 2);
-		Assertions.assertFalse(MoveValidator.canMove(board, from, to));
+		to = makeSquare('g', 2);
+		assertFalse(canMove(board, from, to));
 	}
 
 	@Test
 	void pawn() {
 		// Pawn at A8 to A7 -- valid straight motion for a black pawn
-		Square from = SquareFactory.makeSquare('a', 8);
-		Square to = SquareFactory.makeSquare('a', 7);
-		Assertions.assertEquals(ChessPiece.PieceColor.BLACK, board.getPieceAt(from).getPieceColor());
-		Assertions.assertTrue(MoveValidator.canMove(board, from, to));
+		Square from = makeSquare('a', 8);
+		Square to = makeSquare('a', 7);
+		assertEquals(ChessPiece.PieceColor.BLACK, board.getPieceAt(from).getPieceColor());
+		assertTrue(canMove(board, from, to));
 
 		// Pawn at A8 to B7 -- capturing white pawn, valid
-		to = SquareFactory.makeSquare('b', 7);
-		Assertions.assertTrue(MoveValidator.canMove(board, from, to));
+		to = makeSquare('b', 7);
+		assertTrue(canMove(board, from, to));
 
 		// Pawn at A8 to A6 -- invalid, moving too much
-		to = SquareFactory.makeSquare('a', 6);
-		Assertions.assertFalse(MoveValidator.canMove(board, from, to));
+		to = makeSquare('a', 6);
+		assertFalse(canMove(board, from, to));
 
 		// Pawn at B7 to A8 -- white pawn capturing black pawn, valid
-		from = SquareFactory.makeSquare('b', 7);
-		to =  SquareFactory.makeSquare('a', 8);
-		Assertions.assertEquals(ChessPiece.PieceColor.WHITE, board.getPieceAt(from).getPieceColor());
-		Assertions.assertTrue(MoveValidator.canMove(board, from, to));
+		from = makeSquare('b', 7);
+		to =  makeSquare('a', 8);
+		assertEquals(ChessPiece.PieceColor.WHITE, board.getPieceAt(from).getPieceColor());
+		assertTrue(canMove(board, from, to));
 
 		// Pawn at B7 to B8 -- invalid, can't capture straight ahead
-		to = SquareFactory.makeSquare('b', 8);
-		Assertions.assertFalse(MoveValidator.canMove(board, from, to));
+		to = makeSquare('b', 8);
+		assertFalse(canMove(board, from, to));
 
 		// Pawn at B7 to A7 -- invalid, can't move sideways
-		to = SquareFactory.makeSquare('a', 7);
-		Assertions.assertFalse(MoveValidator.canMove(board, from, to));
+		to = makeSquare('a', 7);
+		assertFalse(canMove(board, from, to));
 
 		// Pawn at B7 to B6 -- invalid, white pawn can't move backwards
-		to = SquareFactory.makeSquare('b', 6);
-		Assertions.assertFalse(MoveValidator.canMove(board, from, to));
+		to = makeSquare('b', 6);
+		assertFalse(canMove(board, from, to));
 
-		// Pawn at B8  to A7 -- invalid, diagonal move but none to capture
-		from = SquareFactory.makeSquare('b', 8);
-		to = SquareFactory.makeSquare('a', 7);
-		Assertions.assertFalse(MoveValidator.canMove(board, from, to));
+		// Pawn at B8 to A7 -- invalid, diagonal move but none to capture
+		from = makeSquare('b', 8);
+		to = makeSquare('a', 7);
+		assertFalse(canMove(board, from, to));
+
+		// Pawn at H2 to H4 -- valid, first move for a white pawn
+		from = makeSquare('h', 2);
+		to = makeSquare('h', 4);
+		assertTrue(canMove(board, from, to));
+
+		// Pawn at H7 to H5 -- valid, first move for a black pawn
+		from = makeSquare('h', 7);
+		to = makeSquare('h', 5);
+		assertTrue(canMove(board, from, to));
 	}
 
 	@Test
 	void noPieceOnSource() {
-		Square from = SquareFactory.makeSquare('b', 1);
-		Square to = SquareFactory.makeSquare('b', 2);
-		assertThrows(CMVException.class, () -> MoveValidator.canMove(board, from, to));
+		Square from = makeSquare('b', 1);
+		Square to = makeSquare('b', 2);
+		assertThrows(CMVException.class, () -> canMove(board, from, to));
 	}
 
 	/**
@@ -277,14 +289,14 @@ class ValidationTest
 	@Test
 	void colorCollision(){
 		// Black rook at A3 to black pawn at A8
-		Square from = SquareFactory.makeSquare('a', 3);
-		Square to = SquareFactory.makeSquare('a', 8);
-		Assertions.assertFalse(MoveValidator.canMove(board, from, to));
+		Square from = makeSquare('a', 3);
+		Square to = makeSquare('a', 8);
+		assertFalse(canMove(board, from, to));
 
 		// White rook at A1 to white queen at C1
-		from = SquareFactory.makeSquare('a', 1);
-		to = SquareFactory.makeSquare('c', 1);
-		Assertions.assertFalse(MoveValidator.canMove(board, from, to));
+		from = makeSquare('a', 1);
+		to = makeSquare('c', 1);
+		assertFalse(canMove(board, from, to));
 	}
 
 	/**
@@ -293,30 +305,30 @@ class ValidationTest
 	@Test
 	void pathClear() {
 		// Queen at C1 to H1 -- invalid, bishop in the way (horizontal)
-		Square from = SquareFactory.makeSquare('c', 1);
-		Square to = SquareFactory.makeSquare('h', 1);
-		Assertions.assertFalse(MoveValidator.canMove(board, from, to));
+		Square from = makeSquare('c', 1);
+		Square to = makeSquare('h', 1);
+		assertFalse(canMove(board, from, to));
 
 		// Queen at C1 to D1 -- valid, nothing in the way (horizontal)
-		to = SquareFactory.makeSquare('d', 1);
-		Assertions.assertTrue(MoveValidator.canMove(board, from, to));
+		to = makeSquare('d', 1);
+		assertTrue(canMove(board, from, to));
 
 		// Rook at A1 to A7 -- invalid, rook in the way (vertical)
-		from = SquareFactory.makeSquare('a', 1);
-		to = SquareFactory.makeSquare('a', 7);
-		Assertions.assertFalse(MoveValidator.canMove(board, from, to));
+		from = makeSquare('a', 1);
+		to = makeSquare('a', 7);
+		assertFalse(canMove(board, from, to));
 
 		// Queen at C8 to A6 -- invalid, pawn in the way (diagonal)
-		from = SquareFactory.makeSquare('c', 8);
-		to = SquareFactory.makeSquare('a', 6);
-		Assertions.assertFalse(MoveValidator.canMove(board, from, to));
+		from = makeSquare('c', 8);
+		to = makeSquare('a', 6);
+		assertFalse(canMove(board, from, to));
 	}
 
 	@Test
 	void rejectNonMovement() {
 		// King at G5 to G5
-		Square from = SquareFactory.makeSquare('g', 5);
-		Assertions.assertFalse(MoveValidator.canMove(board, from, from));
+		Square from = makeSquare('g', 5);
+		assertFalse(canMove(board, from, from));
 	}
 
 	/*
@@ -342,7 +354,7 @@ class ValidationTest
 
 	@Test
 	void squareEquals() {
-		Square sq1 = SquareFactory.makeSquare('a', 1);
+		Square sq1 = makeSquare('a', 1);
 
 		// These tests must manually use Square.equals(), otherwise JUnit doesn't invoke the tested function correctly
 		assertTrue(sq1.equals(sq1));
@@ -352,12 +364,12 @@ class ValidationTest
 
 	@Test
 	void pieceFactory() {
-		assertEquals(BISHOP, ChessPieceFactory.makePiece(ChessPiece.PieceColor.WHITE, BISHOP).getPieceType());
-		assertEquals(KING, ChessPieceFactory.makePiece(ChessPiece.PieceColor.WHITE, KING).getPieceType());
-		assertEquals(KNIGHT, ChessPieceFactory.makePiece(ChessPiece.PieceColor.WHITE, KNIGHT).getPieceType());
-		assertEquals(PAWN, ChessPieceFactory.makePiece(ChessPiece.PieceColor.WHITE, PAWN).getPieceType());
-		assertEquals(QUEEN, ChessPieceFactory.makePiece(ChessPiece.PieceColor.WHITE, QUEEN).getPieceType());
-		assertEquals(ROOK, ChessPieceFactory.makePiece(ChessPiece.PieceColor.WHITE, ROOK).getPieceType());
+		assertEquals(BISHOP, makePiece(ChessPiece.PieceColor.WHITE, BISHOP).getPieceType());
+		assertEquals(KING, makePiece(ChessPiece.PieceColor.WHITE, KING).getPieceType());
+		assertEquals(KNIGHT, makePiece(ChessPiece.PieceColor.WHITE, KNIGHT).getPieceType());
+		assertEquals(PAWN, makePiece(ChessPiece.PieceColor.WHITE, PAWN).getPieceType());
+		assertEquals(QUEEN, makePiece(ChessPiece.PieceColor.WHITE, QUEEN).getPieceType());
+		assertEquals(ROOK, makePiece(ChessPiece.PieceColor.WHITE, ROOK).getPieceType());
 	}
 
 	/**

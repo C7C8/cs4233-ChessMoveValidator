@@ -51,6 +51,11 @@ public class Pawn extends ChessPieceDefined {
 		if (dx == 0 && dy == dir && !board.isSquareOccupied(to))
 			return true;
 
+		// Can also immediately accept the initial-move case where the pawn can move twice
+		if (dx == 0 && dy == 2 * dir && !board.isSquareOccupied(to) &&
+				from.getRow() == (getPieceColor() == PieceColor.WHITE ? 2 : 7))
+			return true;
+
 		// Idiot check to make sure the pawn isn't moving too much
 		if (Math.abs(dx) > 1 || Math.abs(dy) > 1)
 			return false;
