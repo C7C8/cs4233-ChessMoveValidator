@@ -31,6 +31,7 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Map;
 
+import static cmv.ChessPiece.PieceType.*;
 import static org.junit.jupiter.api.Assertions.*;
 
 /**
@@ -116,7 +117,7 @@ class ValidationTest
 		// Bishop at E1 to B4 -- valid
 		Square from = SquareFactory.makeSquare('e', 1);
 		Square to = SquareFactory.makeSquare('b', 4);
-		Assertions.assertEquals(ChessPiece.PieceType.BISHOP, board.getPieceAt(from).getPieceType());
+		Assertions.assertEquals(BISHOP, board.getPieceAt(from).getPieceType());
 		Assertions.assertTrue(MoveValidator.canMove(board, from, to));
 
 		//Bishop at E1 to H4 -- valid
@@ -182,7 +183,7 @@ class ValidationTest
 		// King at G5 to G6 -- valid
 		Square from = SquareFactory.makeSquare('g', 5);
 		Square to = SquareFactory.makeSquare('g', 6);
-		Assertions.assertEquals(ChessPiece.PieceType.KING, board.getPieceAt(from).getPieceType());
+		Assertions.assertEquals(KING, board.getPieceAt(from).getPieceType());
 		Assertions.assertTrue(MoveValidator.canMove(board, from, to));
 
 		//King at G5 to H5 -- valid
@@ -228,7 +229,6 @@ class ValidationTest
 		// Pawn at A8 to A7 -- valid straight motion for a black pawn
 		Square from = SquareFactory.makeSquare('a', 8);
 		Square to = SquareFactory.makeSquare('a', 7);
-		Assertions.assertEquals(ChessPiece.PieceType.PAWN, board.getPieceAt(from).getPieceType());
 		Assertions.assertEquals(ChessPiece.PieceColor.BLACK, board.getPieceAt(from).getPieceColor());
 		Assertions.assertTrue(MoveValidator.canMove(board, from, to));
 
@@ -352,12 +352,12 @@ class ValidationTest
 
 	@Test
 	void pieceFactory() {
-		assertTrue(ChessPieceFactory.makePiece(ChessPiece.PieceColor.WHITE, ChessPiece.PieceType.BISHOP) instanceof Bishop);
-		assertTrue(ChessPieceFactory.makePiece(ChessPiece.PieceColor.WHITE, ChessPiece.PieceType.KING) instanceof King);
-		assertTrue(ChessPieceFactory.makePiece(ChessPiece.PieceColor.WHITE, ChessPiece.PieceType.KNIGHT) instanceof Knight);
-		assertTrue(ChessPieceFactory.makePiece(ChessPiece.PieceColor.WHITE, ChessPiece.PieceType.PAWN) instanceof Pawn);
-		assertTrue(ChessPieceFactory.makePiece(ChessPiece.PieceColor.WHITE, ChessPiece.PieceType.QUEEN) instanceof Queen);
-		assertTrue(ChessPieceFactory.makePiece(ChessPiece.PieceColor.WHITE, ChessPiece.PieceType.ROOK) instanceof Rook);
+		assertEquals(BISHOP, ChessPieceFactory.makePiece(ChessPiece.PieceColor.WHITE, BISHOP).getPieceType());
+		assertEquals(KING, ChessPieceFactory.makePiece(ChessPiece.PieceColor.WHITE, KING).getPieceType());
+		assertEquals(KNIGHT, ChessPieceFactory.makePiece(ChessPiece.PieceColor.WHITE, KNIGHT).getPieceType());
+		assertEquals(PAWN, ChessPieceFactory.makePiece(ChessPiece.PieceColor.WHITE, PAWN).getPieceType());
+		assertEquals(QUEEN, ChessPieceFactory.makePiece(ChessPiece.PieceColor.WHITE, QUEEN).getPieceType());
+		assertEquals(ROOK, ChessPieceFactory.makePiece(ChessPiece.PieceColor.WHITE, ROOK).getPieceType());
 	}
 
 	/**
